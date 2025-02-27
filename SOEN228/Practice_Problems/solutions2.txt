@@ -1,0 +1,90 @@
+Concordia University
+Dept. of Computer Science and Software Engineering
+COMP 228/1 AA - System Hardware
+Summer 2012
+
+Practice Problems 2
+
+Question 1.
+
+Given a binary pattern in some memory location, it it possible to tell whether this pattern represents a machine instruction or a number?
+
+
+No.  Without knowledge of whether the location is an instruction or data, the bits can represent
+either an insturction, or a number, or a series of ASCII characters.
+
+Question 2.
+
+Write an asembly language program that can evaluate the expression:
+
+(A x B) + (C x D)           (A,B, C, D refer to main memory addresses)
+
+in a single accumulator processor. Assume the processor is a single address machine  and has LOAD, STORE, MULTIPLY, and ADD instructions. For example, the following are typical
+forms of the use of these instructions:
+
+LOAD some_address
+MULTIPLY some_other_address
+STORE yet_another_address
+LOAD another_address
+MULTIPLY address_x
+ADD some_address
+STORE address_xyz
+
+
+
+LOAD A
+MULTIPLY B
+STORE TMP
+LOAD C
+MULTIPLY D
+ADD TMP
+STORE RESULT
+
+
+
+Question 3.
+
+Registers R1 and R2 of a computer contain the decimal values 1200 and 4600. What is the effective address of the memory operand in each of the following instructions?
+
+(i) MOVE 20(R1), R5
+
+
+1220
+
+(ii) LOAD #3000, R5
+
+the memory operand is the immediate data 3000 stored as part of the instruction
+which is stored somewhere in memory.
+
+(iii) STORE R5, 30(R1,R2)
+
+5830   
+(iv) ADD -(R2), R5
+
+4599 (assuming byte sized operand)
+
+(v) SUBTRACT (R1)+, R5
+
+1200
+
+
+Question 4:
+
+Register R5 in a program is used to point to the top of the stack.  Write a sequence of instructions using indexed, autoincrement,   and autodecrement  addressing modes to perform each of the following tasks (DO NOT USE PUSH OR POP INSTRUCTIONS) :
+
+(a) Pop the top two items from the stack, add them, and then push the result onto the stack.
+
+
+MOVE (R5)+,R0
+ADD (R5)+,R0
+MOVE R0, -(R5)
+
+assuming that stack grows from high to low locations for a push
+
+(b) Copy the fifth item from the top of the stack into register R3.
+
+MOVE 4(R5), R3
+
+
+                      
+

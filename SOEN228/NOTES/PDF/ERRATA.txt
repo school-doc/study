@@ -1,0 +1,522 @@
+
+
+(page 75 of 228notes_bigtext.pdf) 
+
+      (-4) x  (-2)    =  +8 (in base 10)
+         10       10
+
+Taking the 2s complement of both yields:        1 0 0
+                                             x  0 1 0
+                                            ---------
+                                          0 0 0 0 0 0
+                                          0 0 1 0 0 0  (note how we sign extend with 0s)
+                                          0 0 0 0 0 0
+                                         --------------
+                                          0 0 1 0 0 0  
+
+Which is +8 in 6bit 2s complement, note how the multiplicand 1 0 0 is sign extended
+with 0s (instead of 1s) since the multiplicand is the most negative and has the property
+that when we take the 2's complement of the most negative we obtain itself.  But when
+we sign extend the shifted multiplicand with 0s' , we obtain a postive shifted multipland
+in the second partial product.
+
+
+
+(-4) x  (-1)    = (+4)
+   10       10        10
+
+
+-4 = 1 0 0
+-1 = 1 1 1
+
+
+taking the 2s comp of both yields : 1 0 0 ( this is the 'psycho')
+                                    0 0 1
+
+
+  performing the multiplication :    1 0 0
+                                  x  0 0 1
+                                    -------
+                               0 0 0 1 0 0   (note how we sign extend with 0s )
+                               0 0 0 0 0 0
+                               0 0 0 0 0 0
+                              --------------
+                               0 0 0 1 0 0   (which is +4 in 6 bit 2s comp)
+
+
+
+
+page 53 of 228notes_bigtext.pdf:
+
+          4
+ -328 = 10  - 328 - 9672  , should be:
+
+
+          4
+ -328 = 10  - 328 = 9672  
+
+
+
+
+page 40 of 228notes_bigtext.pdf:
+
+There are a few typos and the typed notes do not convey the steps of
+the sign magnitude addition/subtraction algorithm as completely as the
+hand written notes, so I'll try to clarify it here.
+
+In the examples given, the first number plays the role of "A" and the
+second plays the role of number "B" .
+
+                             SIGN  MAGNITUDE
+   -1    ( number "A")         1   01
+ + -1    ( number "B")      +  1   01
+  ----
+  - 2
+
+Same signs, so add the magnitudes and sign result <-  sign  A :
+
+               mag A  =   01
+             + mag B  =  +01
+                         ----
+                          10 (mag of result)
+
+ since sign A = 1, sign result <= sign A = 1
+
+final answer :   1    10
+                Sign  Mag
+
+which is good old -2 expressed in 3 bit Sign Mag notation.
+
+
+
+
+            SIGN  MAGNITUDE
+  -1          1      01        
++ -2          1      10
+----
+ - 3
+        
+Same signs, so add the magnitudes and sign result <-  sign  A :
+   
+             mag A  =   01
+           + mag B  = + 10
+                       ----
+                        11  (mag of result)
+
+since sign A = 1, sign result <= sign A = 1
+
+final answer :   1    10
+                Sign  Mag
+
+
+               SIGN  MAGNITUDE
+     -2         1      10
+  +  -2         1      10
+    ----
+    -4
+
+
+Same signs, so add the magnitudes and sign result <-  sign  A :
+
+                  mag A     =    10
+                + mag B     =  + 10
+                -------        ----
+                result mag      100
+                                |
+                                |
+                                ---- we LOSE THIS CARRY SINCE WE
+                                     ONLY HAVE 2 BITS FOR THE MAGNITUDE PORTION!
+                                     AND WE STORE ONLY THE 00 BITS IN THE MAGNITUDE OF
+                                     THE RESULT.
+                                      (OVERFLOW OCCURS, N.E.B - Not Enough Bits)
+
+  since sign A = 1, sign result <= sign A = 1
+
+final answer :   1    00
+                Sign  Mag
+
+Which is the incorrect answer of -0,since overflow has occurred.
+
+
+            SIGN  MAGNITUDE 
+   -3       1        11
+ + -3       1        11
+   ---
+   -6
+
+Same signs, add the two magnitudes:
+
+                     1
+          mag A  =   11
+      +   mag B  = + 11
+       --------    -----
+     mag result     110
+                    |
+                    |
+                    --> Again, we lose this carry since NEB in the magnitude
+                        art and we store only the 10 for the mag of the result.
+
+since sign A = 1, sign result <= sign A = 1
+
+
+final answer:     1   10
+               Sign  Mag
+
+The final answer is incorrect (- 2 ) since overflow has occurred.
+
+
+Example: Additional Signed-Magnitude Subtraction Examples
+
+Recall that in Signed-Magnitude Subtraction, if the signs of A and B are
+OPPOSITE, we ADD the two magnitude portions and set the sign of the result to
+sign of A, otherwise we do result = bigger -smaller and the sign result depends on who is
+bigger .
+
+             SIGN    MAGNITUDE
+    -1       1        01
+-   +1       0        01
+   ---
+   -2
+
+
+Opposite signs, add two mags, sign result <-- sign A:
+
+        mag A =    01
+    +   mag B =  + 01
+       ------     ----
+     result mag =  10  
+
+final answer :    1   10
+                 sign magnitude
+
+which is -2 and is correct.
+
+
+
+           SIGN    MAGNITUDE
+  -1       1          01
+- +2       0          10
+ ---
+ -3                               
+
+
+Opposite signs, add two mags, sign result <-- sign A:
+
+      mag A  =   01
+   +  mag B  =   10
+    --------    ----
+  mag result =   11
+
+
+setting sign of result to sign of A, gives the final correct answer:
+
+final answer   1   11
+              sign magnitude    
+
+
+
+
+           SIGN    MAGNITUDE
+  -1       1          01
+- +3       0          11
+ ---
+  -4
+
+Opposite signs, add two mags, sign result <-- sign A:
+
+                         1
+           mag A    =    01
+        +  mag B    =  + 11
+          ------      -----
+         mag result =   100
+                        |
+                        |
+                        ---> WE LOSE THIS CARRY OUT AND STORE ONLY
+                             THE 00 as the mag of result.
+
+final (incorrect) answer :   1     00
+                            sign   mag
+
+The answer is incorrect (-0) since OVERFLOW has occured when we added the two
+magnitude portions and we lost the final carry out.
+
+            SIGN   MAGNITUDE
+    +1       0         01
+-   -1       1         01
+  ----
+   +2 
+
+Opposite signs, add two mags, sign result <-- sign A:
+      
+                       1
+           mag A   =   01
+        +  mag B   = + 01
+          ------     ----
+           mag res =   10
+
+Final correct answer:  0   10
+                      sign mag
+
+
+
+            SIGN   MAGNITUDE
+   +1        0        01
+-  -2        1        10
+  ---
+  +3
+
+Opposite signs, add two mags, sign result <-- sign A:
+
+
+             mag A  =   01
+         +   mag B  =   10
+           ------       --
+          mag result =  11
+
+Final correct answer :    0    11
+                         sign   mag
+
+
+            SIGN   MAGNITUDE
+  +1         0        01
+- -3         1        11
+ ---
+ -4
+
+Opposite signs, add two mags, sign result <-- sign A:
+
+                        1
+             mag A  =   01
+         +   mag B  =   11
+           ------       --
+          mag result = 100
+                       |
+                       |
+                       ---> WE LOSE THIS FINAL CARRY OUT SINCE WE HAVE ONLY
+                            TWO BITS FOR THE MAGNITUDE OF RESULT.  OVERFLOW
+                            OCCURS DUE TO N.E.B
+
+Final (incorrect) answer:    0   00
+                           sign  magnitude
+
+
+
+
+            SIGN    MAGNITUDE
+    -1       1         01 
+ -  -2       1         10
+   ---
+    +1
+
+
+SAME signs, so we determine
+
+                              Bigger mag  =    10
+                        -     Smaller mag =  - 01
+                             ------------    ----
+                            result mag    =    01    (using rules of FULL SUBTRACTION)
+
+
+Since |A| < |B|, we set the sign of the result to Opposite that of sign A:
+
+
+Final correct answer:   0     01
+                       sign   mag
+
+
+
+             SIGN    MAGNITUDE
+    -1         1        01
+  - -3         1        11
+   ---
+    +2
+
+SAME signs, so we determine 
+ 
+                              Bigger mag  =    11
+                        -     Smaller mag =  - 01
+                             ------------    ----
+                            result mag    =    10    (using rules of FULL SUBTRACTION)
+
+
+Since |A| < |B|, we set the sign of the result to Opposite that of sign A:
+
+Final correct answer:   0     10
+                       sign   mag
+
+
+(NOTE: This example actually is present TWICE in the type notes).
+
+ 
+
+The interested reader is encouraged to clarify oneself in a similar manner
+the remaining two examples.  
+
+
+
+
+page 93 pf bigtext228notes.pdf:
+
+                           1
+ This yields:   0.0101 x 16      (remove the original 4 leading zeros and
+                                  decrement the original exponent of 2 by 1 )
+
+
+
+page 132 of bigtext (Section 2.5.7):
+
+
+
+Fn = a'b'c + a'bc + ....
+
+should be : F  =  (same boolean expression)   
+             4
+
+in other words, the "F  "  should be " F  "
+                      n                 4
+
+in the sentence:  "For example, the truth tables for F1, F2, F3, and F3"
+                                                                    ---
+                                                            this should be
+                                                             F4
+
+
+
+
+
+in section 1.5.2 (p.28 bigtext):
+
+       1 0 1
+   x   1 1 1  --> should be 1 1 0 
+      ------
+       0 0 0
+
+
+in section 2.9.1 (p 154 bigtext):
+
+The function can be written as F = A xor B = A'B +  AB'
+                                            -----------
+                                             is the correct expression
+
+
+
+in 2.9.4 ( p. 157 bigtext):
+
+the simplified truth table of the 8-1 mux is incorrect in some rows.
+It should be:
+
+   S2  S1  S0   Output
+   0    0   0    D0
+   0    0   1    D1
+   0    1   0    D2
+   0    1   1    D3
+   1    0   0    D4
+   1    0   1    D5
+   1    1   0    D6
+   1    1   1    D7
+
+
+in 2.9.5 (p. 158 bigtext):
+
+the gate level diagram for the 2-1 mux is missing,
+it would be two AND gates, an inverter and one OR as done is class.
+
+
+
+d0 ----  |---
+         |    )--------------
+s' ----  |---               |
+                            |-----)----\
+                                  ) OR  \
+                                  )     )------
+                            |-----)---/
+d1------ |---               |
+         |    )-------------
+s------- |---
+
+
+
+          
+
+
+Range of signed magnitude numbers (p.35 bigtext):
+
+                 n-1                  n-1 
+should be:  - ( 2       -   1 ) to ( 2       -   1 )
+
+
+
+
+
+Range of 2s complement (p.55 bigtext):
+
+"note the range is one larger (on the negative end) given
+earlier for signed magnitude representation (      )
+                                           --------
+
+                                        the  expression in the
+                                         notes in the  (  ) is
+                                        incorrect, it should be :
+
+ 
+                 n-1                  n-1 
+            - ( 2       -   1 ) to ( 2       -   1 )  ( range for n bit
+                                                        sign mag)
+
+
+
+
+2.12.3  (p. 169 bigtext)
+
+
+Values of S(t) R(t) in the table are incorrect. They should be:
+
+S(t) R(t)
+0    0       hold
+0    0       hold
+0    1       reset
+0    1       reset
+1    0       set
+1    0       set
+1    1       not allowed
+1    1       not allowed 
+
+
+(note, Q(t) has not been included in above, but it should be listed as in the table in the notes,
+sme of the values of S(t) R(t) were incorrect.
+
+
+
+3.3  (p.196 bigtext)
+
+
+
+the image of the instruction should have 
+
+              8 bits                  24 bits  
+             opcode            operand addressing information
+
+
+  * four ASCII or EBCDIC characters:
+
+          character 2: 1110 1111
+                               ---
+                                the last '1' is missing  
+
+
+
+
+
+Chapter 5:
+
+In 228notes.pdf, chapter 5, page 207 I found an error which is not
+   fixed in the ERRATA.txt
+   In the diagram, the R/W is connected to A0 when it should be connected
+   to the R/W line.
+   And the line coming into A0 of the chip should be from the A0 line at
+   the top.
+
+
+found by: Taief Ahmed
+
+

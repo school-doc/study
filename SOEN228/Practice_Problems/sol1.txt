@@ -1,0 +1,72 @@
+
+Question 1:
+
+(a) 26 = 0 000011010
+    
+   -37 = 1 000100101
+
+  -123 = 1 001111011
+
+
+(b) 26 = 0 000011010         ( note that positive numbers have the
+                               same representation in sign-magnitude
+                               and two's comp. )
+
+  -37 = 1 111011011
+
+ -123 = 1 110000101
+
+
+
+Question 2:
+
+(i)  010110       (+22)
+   + 001001      +(+ 9)
+     ------      ------
+     011111      +31
+
+(ii)   011001     (+25)
+     + 010000   + (+16)
+      -------     -----
+       101001      (+41)
+ 
+       Overflow has occured  
+
+(iii)  010110     (+22)     =       010110
+     - 011111   - (+31)        + two's comp(011111)
+                 ------
+                   -9
+
+                 =  010110
+                  + 100001
+                   --------
+                    110111  ===> -9 in twos comp
+
+                    
+         1s comp =  001000
+                  +      1
+                   -------
+                    001001
+
+
+
+Question 3:
+------------
+
+(a) +1.7 =  0  01111  101101
+  
+   -0.012=  1  01000  100010
+
+     +19 =  0  10011  001100
+
+      
+
+
+                                                               -14
+(b)  smallest numbers (other than exact 0) are +/- 1.000000 x 2            
+
+
+                                                                    15
+     largest numbers (other than +/- Infinity) are  +/- 1.111111 x 2
+
+

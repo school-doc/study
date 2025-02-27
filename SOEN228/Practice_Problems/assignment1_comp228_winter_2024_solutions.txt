@@ -1,0 +1,391 @@
+
+Question 0:
+
+(a)  since  8 = 2e3 (2 to the power 3), we expand each
+     octal digit in the number into 3 bits:
+
+     (011 010 001.010 011)
+                          2
+
+To avoid paranoia, 321.23 in base 8 = 
+
+  3x8e2 + 2x8e1 + 1x8e0 + 2x8e-1 + 3x8e-2 = 209.296875
+
+and (011 010 001.010 011)    = 209.296875
+                         2
+
+(b)     57 = 3 x 19 + 0  => (a0)
+        19 = 3 x 6  + 1  => (a1)
+         6 = 3 x 2  + 0  => (a2)
+         2 = 0 x 2  + 2  => (a3)
+                         
+
+Paranoia check:
+
+  57 = 2010 in base 3  =  (2x3e3) + (0x3e2) + (1x3e1) + (0x3e0)
+                       =  54      +  0      +  3      + 0
+                       = 57
+
+next we convert the fractional portion:
+
+  0.6875 x 3 = 2.0625 
+  0.0625 x 3 = 0.1875
+  0.1875 x 3 = 0.5625
+  0.5625 x 3 = 1.6875
+
+so .6875 in base 3 to 4 decimal place accuracy
+            = 0.2001
+            = 2x4e-1 + 1x4e-4
+            = 0.5625 in base 10
+
+interestingly enough, if we had enough bits in the fractional part
+, we could continue the fractional conversion:
+
+0.6875 x 3 = 2.0625
+0.0625 x 3 = 0.1875
+0.1875 x 3 = 0.5625
+0.5625 x 3 = 1.6875
+
+and conclude that in base 3 , the 0.6875 is a repeating decimal:
+
+  .6875 (base 10) = 0.20012001200120012001... (forever)
+ 
+                             ____              
+so 57.6875 in base 10 = 2010.2001 in base 3  
+                                     _____
+                         (where the
+                          means the digits
+                          repeat forever)
+                        
+
+if we use 8 digits precision after the . , the value
+of the fractional part increases to only: 0.56446834
+and there is still significant error. 
+
+So in theory, on a computer in some alternate universe
+ which  uses base 3 (instead of binary) to store numbers
+ 0.6875 + 0.6875 will NOT equal exactly 1.375.  Good thing
+we live in a universe in which computers use base 2.
+
+
+(c)  272 =  8 x 34  + 0
+      34 =  8 x 4   + 2
+       4 =  8 x 0   + 4
+
+
+272 in base 10 =  420 in base 8
+               =  4x8e2 + 2x8e1 + 0x8e1
+               =  256   + 16    + 0
+               = 272
+
+
+(d) 1100 0000 1100 1010 in base 2  =
+     
+     (C    0    C    A  ) in base 16
+
+
+
+(e)  0.C0CA in base 16  =    Cx16e-1  +  0x16e-2  +  Cx16e-3  + Ax16e-3 
+                        =    12x16e-1 +   0       +  12x16e-3 + 10x16e-3
+                        =    (can stop at above line since good enough for
+                              full marks)
+                        = 0.753082275 in base 10 
+
+
+(f)     0.10 x 2 = 0.20
+        0.20 x 2 = 0.40
+        0.40 x 2 = 0.80
+        0.80 x 2 = 1.60
+        0.60 x 2 = 1.20
+        0.20 x 2 = 0.40
+        0.40 x 2 = 0.80
+        0.80 x 2 = 1.60
+        0.60 x 2 = 1.20
+        0.20 x 2 = 0.40
+        0.40 x 2 = 0.80
+        0.80 x 2 = 1.60
+   
+so to 12 bits of precision:
+
+     0.10 in base 10 = 0.000110011001
+
+
+
+                                        ____________
+if we had infinite bits it would be: 0.0001100110011
+
+
+
+
+Question 1:
+
+(a)  01011110
+
+(i) it represents the number 94
+(ii)it also represents the number 94
+(iiI) it represents the number 94 (or +94 if we want to be very specific)
+
+
+
+(b) 15 = 01111  in 5 bit 2s comp
+ 
+    -15 =  10000
+         +     1
+           -----
+           10001
+
+
+                      1
+so we perform:     10001
+                +  00001
+                  ------
+                   10010
+
+  which is a negative number in 2s complement notation =  - ?
+ to obtain the value of ?, take the 2s comp of : 10010
+                                             
+ 
+                                   flip bits :   01101
+                                   add 1      +      1
+                                                 -----
+                                                 01110  which is +14
+
+so 10010 = -14  (in 2s comp representation)
+
+NO OVERFLOW
+
+(c) in 5 bit Sign mag:
+
+          Sign  MAG
+    -15  =  1   1111      (-15 plays the role of A in the S.M addition algorithm )
+     +1  =  0   0001
+
+
+Comparing the mags, we determine BIGGER = 1111, and
+SMALLER = 0001 and we perform:
+
+   result =   Bigger - Smaller (using rules of full subtraction)
+
+             1111
+         -   0001
+            -----
+             1110   (magnitude 14)
+
+we set the sign of the result to sign of A 
+
+
+               Sign  MAG
+final result =  1   1110
+
+
+
+NO OVERFLOW
+
+
+
+(d)  -16 in 5 bit 2s comp = 10000
+     -1  in 5 bit 2s comp = 11111
+
+we also note that the range of 5 bit 2s comp is from -16 to +15,
+thus -16 is the most negative value and is the "psycho" since when
+we take the twos complement of 10000 we obtain itself.  This means we have
+to modify how we sign extend the multiplier.
+
+Since both operands are negative, we take the 2s comp of each (so that
+we are now multiplying a postive by a positive):
+
+16  =        10000
+
+
+             1111
+flip bits:   01111
+add 1      +     1
+            ------
+             10000
+
+
+
+-1  =       11111
+
+flip bits : 00000
+add 1      +    1
+            ------
+            00001
+
+
+  so we perform:       1 0 0 0 0
+                  X    0 0 0 0 1
+                     -----------
+            0 0 0 0 0  1 0 0 0 0  (note how we sign extended with 5 0s!)
+            0 0 0 0 0  0 0 0 0 0
+            0 0 0 0 0  0 0 0 0 0
+            0 0 0 0 0  0 0 0 0 0
+            0 0 0 0 0  0 0 0 0 0
+           --------------------------
+            0 0 0 0 0  1 0 0 0 0     (which is +16 in 10 bit 2s comp)
+
+
+NOTE: the last 4 rows of all 0s are not really necessary, but for the sake
+      of completeness and understandig they have been included.
+
+   
+
+(e)   In 2s comp arithmetic we perform A - B by doing A +  (2s comp of B)
+
+ +4 = 00100  (in 5 bit 2s comp)
+
++6 = 00110   (in 5 bit 2s comp)
+
+since we wish to perform (+4) - (+6), we really do :
+
+           (+4)  +  [ the 2s comp of +6 ]
+
+so we take the twos comp of:           00110
+                        
+                                          1 
+                            flip bits: 11001
+                            add 1     +    1
+                                       -----
+                                       11010
+
+
+ so we perform :          0 0 1 0 0
+                    +     1 1 0 1 0 
+                         ----------
+                          1 1 1 1 0   =   - ?
+
+
+To obtain the value of ?, take the twos comp of:      1 1 1 1 0
+
+                                                            1
+                                        flip bits     0 0 0 0 1
+                                        add one     +         1
+                                                      ---------
+                                                      0 0 0 1 0
+
+which is 2, so 1 1 1 1 0   = - 2, which is what we expect when we
+do (+4) - (+6) = -2.  
+
+The beauty of 2s complement arithmetic is that we only need to know how
+to do addition in order to do both addition and subtraction  (and we also
+need to know how to obtain the 2s complement of a number, but this is trivial).
+
+
+Question 2:
+
+(i) since the base of the floating point format is 4 and 4 = 2e2, normalized
+    means in this case that the first two bits of the mantissa are both NOT 0.
+
+    001  NOT normalized
+    010   normalized
+    011   normalized
+    100   normalized
+
+
+(ii) smallest positive number obtained with:
+    
+
+     smallest normalized mantissa =  010
+     exponent                     = the most negative = 00  (which is -2 in excess 2)
+     sign                         =  0  (positive)
+
+     
+     S   EXP   MANT
+     0    00   010
+
+
+value =   0.010 x 4e(-2)
+               2
+
+                      -2
+      =   (1x2e-2) x 4
+
+      =   0.25 x 0.0625
+      =   0.015625 (in base 10)
+
+
+
+(iii)  3.5  =   11.10 
+            =   11.10 x 2e0
+            =   1.110 x 2e1
+            =  0.1110 x 2e2
+            =  0.1110 x 4e1  ( since 2 squared = 4 to the power 1)
+      
+
+ 
+
+Eactual = 1
+so Estored = Eactual + excess value
+           = 1       + 2
+           = 3
+           = 11
+
+ mantissa = 111
+
+  sign = 0
+
+   S   EXP MANT
+   0   11  111
+
+
+
+
+ALTERNATE METHOD:  3.5 (in base 10) =  3.2 in base 4
+  
+                          3.2  x 4e0  = 0.32 x 4e1
+                                 
+expressing the 0.32 fractional part which is in base 4 as its
+equivalent form in base 2 using the shortcut methos since 4 = 2e2,
+each base 4 digit expands to two base 2 bits:
+
+     (0. 3  2)    x 4e1
+              4
+
+   = (0. 11 10)   x 4e1
+               2
+
+
+so we arrive at the same answer of :  Eactual = 1
+                                      Estored = 1 + 2 = 3 
+                                              = 11 (in binary)
+
+ Mantissa = 111
+
+  sign = 0
+
+
+
+
+(b)  4  0  2  0  0  0  0  0
+
+ 
+
+expanding the 8 hex digits into 32 bits yields:
+
+      |          |              
+     0|100 0000 0|010 0000 0000 0000 0000 0000
+      |          |                            
+
+    S   EXPONENT     MANTISSA
+
+
+ restoring the "hidden" 1 gives the 24 bit SIGNIFICAND :  1.010 0000 0000 0000 0000 0000
+                                                       =  1.01  
+
+the  stored exponent = 1000 0000  
+                     = 128
+
+
+so Eactual = Estored - 127
+           = 128 - 127
+           = 1
+
+                         1
+Decimal value = +1.25 x 2
+              = 2.5
+
+
+    
+
+
+

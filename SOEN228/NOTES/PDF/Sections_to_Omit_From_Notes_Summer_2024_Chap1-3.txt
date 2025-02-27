@@ -1,0 +1,59 @@
+
+The following sections from the course notes may be omitted
+without loss of general understanding. They may be considered
+"additional information" and the interested reader is certainly
+free to read these sections, but there will be no exam questions based
+on these topics:
+
+1. Numbering Systems 
+
+Omit the following sections:
+
+1.4 
+
+from 1.5.2 omit the sections on : Division
+                                  Modular Arithmetic
+
+from 1.5.4 omit the section on: Two's Complement vs One's Complement
+
+from 1.5.5 omit the section on: Booth Multiplication Algorithm
+
+1.7.6
+1.7.7
+1.7.8
+1.7.9
+
+1.8
+
+1.9.2
+1.9.3
+
+1.10
+
+
+
+You are responsible for reading and understanding all the other sections
+from Chapter 1 of the course notes.
+
+
+
+2. Digital Logic
+
+Omit the following sections:
+
+2.12.8
+2.13.3
+2.15 : only responsible for understanding what a "state diagram " is, the rest of
+       the material in 2.15 may be omitted.
+
+
+
+3. Addressing Methods and Instruction Sequencing
+
+Omit 3.8 Zero-Address Machines
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+
+Welcome to the NASM Tutorial.
+Introduction
+
+Here I will include source and such to help learn assembly using NASM syntax. I am currently learning myself, and was frustrated at not seeing much out there on NASM. This is a problem since in some ways NASM syntax is different from some other assemblers (e.g. MASM, TASM). So here goes!
+But before we begin...
+
+I am going to assume that you have some assembly programming knowledge, be it from experience or a textbook. There are several fine assembly sources referenced at my homepage here.
+DOS .COM Programs
+
+These are in my opinion the simplest programs to understand, so I thought it would be a good starting point. According to the NASM documentation (Section 7.2), to write a .COM program, you would create a source file looking like:
+
+  org 100h
+  section .text
+  ; put your code here...
+start:
+...
+...
+  section .data
+  ; put your data items here
+...
+...
+...
+  section .bss
+  ; put your uninitialized data here
+...
+...
+...
+
+where you would replace the ellipses(...) with instructions, data, and uninitialized data, respectively. Also note that there should not be an END directive. The code simply ends when it sees:
+
+mov ah, 4ch
+int 21h
+
+(the "exit to DOS" function).
+
+To assemble such a program, use the command:
+
+nasm myprog.asm -fbin -o myprog.com
+
+You may look at some source that I have written, but assemble and run it at your own risk!
+
+What also helps is to download and use the freely available NASM-IDE. It provides an "ASM Assistant" that sets up the framework described above automatically.
+
+
+

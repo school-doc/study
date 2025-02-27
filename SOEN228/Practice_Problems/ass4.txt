@@ -1,0 +1,110 @@
+COMP 228
+Practice Problems 4
+
+The following are pratice problem. You are not required to
+hand in solutions. You are encouraged to solve the questions
+on your own.
+
+
+
+QUESTION 1:
+
+Consider a RAM system of size 64 Kbytes. For each of the 
+following cases show how this RAM can be built. Draw a 
+MEMORY MAP showing which chips are used for which range of 
+addresses.  Draw a NEAT drawing (employ the use of drawing 
+aids such as rulers, templates, etc.) showing how the chips
+are connected to the address decoder and the CPU address, data, and 
+control lines:
+
+(a) Use memory chips each having 8K x 8 bits.
+(b) Use memory chips each having 16K x 4 bits.
+
+
+Use a 1-d organization, then repeat using a 2-d organization.
+
+
+SOLUTION :
+
+(see provided schematic diagrams)
+
+
+QUESTION 2:
+
+A block-set-associative cache consists of a total of 64
+blocks divided into four block sets. The main memory contains
+4096 blocks, each block has 128 bytes.
+
+(a) How many bits are there in a main memory address?
+(b) How many bits are there in each of the TAG, SET, and
+    WORD fields?
+
+
+SOLUTION
+
+(a) We must first determine the total number of locations (in this case, each
+    location is 8 bits wide) contained in the main memory as:
+   
+     # of locations =  # of main memory blocks x # of bytes/block
+                    =  4096 blocks x 128 bytes/blocks
+                    =  524 288 bytes
+
+     Therefore, the number of address lines needed is = log ( 524 288)
+                                                           2     
+
+                                                      = 19
+
+    Therefore, a main memory address consists of 19 bits.
+
+(b)  We divide up the bits of the main memory address into:
+
+     ------------------------
+     | TAG  |  SET  | WORD  |   
+     ------------------------
+
+
+
+as follows:
+
+
+WORD = 7 since each block contains 128 bytes, hence we need 7 bits
+       to uniquely identify one of these 128 bytes
+
+SET =   we must determine the number of sets contained in the cache.
+        Since the cache consists of 64 blocks, and each set contains
+        4 blocks, we have a total of 64/4 = 16 different sets in the
+        cache. Thus, we need 4 bits in the SET field of a main memory
+        address to identify one of these 16 sets.
+
+TAG = whatever is left over is used for the tag
+       (19 bits) - ( 7 + 4)
+    =  19 - 11
+    = 8 bits for the TAG field.
+
+
+
+QUESTION 3:
+
+(a) Explain the difference between memory-mapped IO and the IO-Port approach.
+
+
+(b) What are the three types of Direct Memory Acess techniques? Of these three
+    which is the fastest?
+
+
+SOLUTION
+
+(a) In memory-mapped IO, to access an IO device we use the same MOV source , device_address
+    instruction as an ordinary MOV source , some_memory_address.  In the IO port approach,
+    the instruction set contains different instructions used for reading and writing to
+    an IO device (for example IN port_address, and OUT port_address).  This means that
+   an IO device can have the same address  as a main memory location. The CPU distinguishes
+    between the two addresses by use of an IO/M line (which is used by the address decoding 
+   logic (in addition to the address lines) to select either the IO device or the memory device.
+
+(b) Block Transfer, cycle-stealing, and interleaved DMA.
+    block transfer is the fastest.
+
+
+
+

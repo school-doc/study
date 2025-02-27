@@ -1,0 +1,153 @@
+
+Question 1:
+
+
+(a) The advantage of the mux at the input of MDR is that it allows
+     for MDR to be loaded with data from the memory during a clock
+     cycle in which the bus is beign used for some other data transfer
+     as in T1 of the fetch phase.
+
+
+(b) we need to add a tri-state buffer in between the data_out of the
+    memory and the bus in order to avoid a bus conflict if we remove the
+    MDR multiplexer.  The FETCH steps are now:
+
+T0:  bus <- PC, MAR <- Bus, sel_temp = 1, F= ADD,  result <- output of ALU
+
+T1: read = 1, Bus <- data_out_from_memory, MDR <- Bus 
+
+T2: Bus <- MDR, IR <- Bus
+
+T3: Bus <- Result, PC <- Result
+
+
+NOTE: one more clock cycle is required in this modified organization 
+      (refer to the clourse notes for the FETCH of this CPU - it required
+       only 3 clock cycles, so the MDR MUX is indeed beneficial as it saves
+       1 clock for every instruction FETCH.
+
+
+
+(c) We assume the instruction is stored in memory as:
+
+
+   Address               Contents
+ 
+    i                 MAC  #NUM  (R0)+    R1
+   i+1                next instruction
+
+
+
+The EXECUTE starts to T3 :
+
+T3: load TEMP with immediate data #NUM 
+    BUS <- IR(immediate data field), TEMP <- Bus
+
+T4: get the operand pointed to by R0 from memory into MDR and increment value of R0 by first loading MAR with the address stored in RO , and then read memory
+in subsequent clock.
+
+    Bus <- R0, MDR <- BUS, Sel_temp = 1, F =ADD, result <- alu output
+               ----------
+
+                this is a typo , should be  MAR <- BUS
+
+T5: READ, MDR <- data_out_of_memory, BUS <- result, R0 <- Bus
+
+T6: perform the multiply of #NUM X MEM(R0)
+    Bus <- MDR, sel_temp = 0, F = multiply, result <- alu out
+
+T7: save result of multiplication into the TEMP 
+
+    BUS <- Result, TEMP <- Result
+
+T8: add R1 to TEMP
+    BUS <- R1, F = ADD, sel_temp = 0, result <- alu output
+
+T9: store final result back into R1
+
+    Bus <= Result, R1 <- Bus, END.
+
+
+
+
+Question 2:
+
+The instruction as it is stored in memory is:
+
+
+address   contents
+
+i           JSR
+i+1         MYSUB
+i+2         "next instruction"
+
+
+
+The FETCH is:
+
+
+T0:  Bus A <- PC, MAR <- Bus B , F= B, Y <- Bus B
+
+T1: READ, Bus A <-- memory, F = B, IR <- Bus B
+
+T2: F = A+ 1, PC <- Bus B  ( note PC = i + 1 at next edge)
+
+
+The EXECUTE is:
+
+T3:  fetch the subroutine address from memory location i+1 also put current
+      PC (i+1) into Y rgister where it will be added with 1 and save return 
+     addresson the stack 
+
+     Bus A <= PC, F= B, MAR <- Bus B , Y <- Bus B
+
+T4: READ, Bus A <- Memory  ( bus A i has address MYSUB on it ),
+     F = B, PC <= BUS B   ( PC will be loaded with address MYSUB at next edge)
+
+T5: F = A+1, MDR <- BUS B  (this will increment old value of PC = i+1) by 1 and it
+   will be saved into MDR ( i.e. MDR = i+2 which is the return address to be saved on the
+   stack)
+
+T6: decrement SP by 1 and load decremented value of SP into MAR to prepare to write the
+    return address to stack in main memory)
+
+   Bus A <-  SP,  F = B- 1, SP <=  Bus B, MAR <- Bus B
+
+
+T7: Place MDR (which has been previosly loaded with the return address i+2 onto Bus A and write
+     it into memory
+
+   Bus A <- MDR, F = B, WRITE,  END (the END will reset th sequence counter at next
+   edge thus commencing a new FETCH)
+
+
+
+
+Question 3:
+
+
+the steps needed to EXECUTE a POP R0 on the 3-bus CPU are:
+
+
+T3: inc SP = 1 
+
+T4:  BUS A <- SP, F =A, MAR <- Bus C
+
+T5:  READ sel, MDR <- data out of memory
+
+T6: Bus A <- MDR, F= A, R0 <- Bus C
+
+
+
+NOTE: For extra practice you can write the EXECUTE steps for different types
+of instructions for each of the 3 given CPU organizations.  For example, try
+doing:
+
+
+ADD NUM1, NUM2
+
+which performs :  add the contents of memory location NUM1 with the contents of
+                  memory location NUM2 and stores the result back into memory
+                  location NUM2.
+
+

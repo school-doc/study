@@ -1,0 +1,6 @@
+
+Here is a very nice digital logic simulator (free!) for
+Windows, MacOS, and Linux :
+
+
+https://github.com/hneemann/Digital

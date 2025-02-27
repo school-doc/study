@@ -1,0 +1,102 @@
+COMP 228/4 Secton DD
+Winter 2024
+Assignment 1
+
+Date Assigned:  Thursday, Feb.. 8, 2024
+Due Date: Wednesday, Feb. 14, 2024 , in class in paper format. 
+
+Question 0:  (in computing, we often start counting from 0 ...)  
+
+(a) Convert (321.23)8  into its base-2 representation.
+
+(b) Convert (57.6875)10 into its base-3 representation with 4 digit precision after the . point.
+
+(c) Convert (272)10 into its base-8 representation. 
+
+(d) Convert (1100000011001010)2 into is base-16 representation.  
+
+Hint: "I met her in a club down in North Soho
+          Where you drink champagne and it tastes just like cherry cola
+          See-O-See-A cola." R. Davies. 
+
+(e) Convert (0. C 0 C A)16 into is base-10 representation.  
+
+Hint: "I met her in a club down in North Soho
+          Where you drink champagne and it tastes just like cherry cola
+          See-O-See-A cola."  Lola , The Kinks, written by R. Davies. 
+
+(f) Convert (0.10)10 into its base-2 representation using 12 digits of precision after the binary point. 
+
+Question 1:  
+(a)  Consider the following binary number :
+
+     01011110 
+
+What decimal value do these 1s and 0s represent if we interpret these bits to represent:
+
+(i) an unsigned  8-bit binary integer?
+(ii) an 8-bit two's complement integer?
+(iii) an integer number represented in 8-bit sign-magnitude notation?
+
+(b)  Perform the operation:
+
+            (-15)
+       +    (+ 1)
+     =       -14 
+
+using 5-bit twos complement arithmetic.  Indicate whether overflow has occurred.
+
+(c)  Perform the operation:
+
+            (-15)
+       +    (+ 1)
+     =       -14 
+
+using 5-bit sign magnitude arithmetic.  Indicate whether overflow has occurred.
+
+(d) Perform the operation:
+
+             -16
+       x   (- 1)
+       =    +16
+
+using 5-bit two's complement multiplication following the "pencil-paper" method using
+sign extension.
+
+(e)  Perform the operation:
+
+            (+4)
+          - (+6)
+          =  -2
+
+in 5-bit two's complement arithmetic. 
+
+
+Question 2:
+
+(a) Consider the following floating point format:  S EE  MMM  where:
+
+S = sign bit
+EE = two bit exponent stored in excess-2 notation
+MMM = 3 bit mantissa stored in normalized form. 
+
+There is no hidden `1' bit in the mantisaa and the base is 4. 
+
+(i) State whether each of the following mantissas is normalized or not:
+
+001
+
+010
+
+011
+
+100
+
+(ii) Give the decimal value of the smallest positive number which can be represented in this format.
+
+(iii) Express the decimal number +3.5 in this format .
+
+(b) Give the value as a real decimal number the value represented by the IEEE 754 32-bit floating point number 40200000 (this is the 8 digit hexadecimal representation of the IEEE 754 number). 
+
+Hint:  Use the shortcut method to convert this hex number into its equivalent 32 binary bits. 
+
